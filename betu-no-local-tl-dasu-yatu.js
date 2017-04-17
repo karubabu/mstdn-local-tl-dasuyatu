@@ -9,7 +9,7 @@
 // ==/UserScript==
 
 (function() {
-    'use strict';
+    "use strict";
     var babu = $("div .column").eq(2).clone().appendTo(".columns-area");
     babu.children("div[role='button']").text("pawoo.net local timeline");
 
@@ -21,36 +21,72 @@
             .done(function(data) {
                 $result.html("");
                 data.forEach(function(toot) {
-                    var $user = $("<div style='font-size: 15px;' />");
-                    var $userLink = $("<a class='status__display-name' style='display: block; max-width: 100%; padding-right: 25px;' />").attr("href", toot.account.url);
+                    var $user = $("<div />")
+                        .css("font-size", "15px");
 
-                    var $icon = $("<div class='status__avatar' style='position: absolute; left: 10px; top: 10px; width: 48px; height: 48px;' />");
-                    $icon.append($("<div class='avatar' style='width: 48px; height: 48px; background-size: 48px 48px;'/>").css('background-image', 'url(' + toot.account.avatar + ')') );
+                    var $userLink = $("<a />")
+                        .attr("href", toot.account.url)
+                        .addClass("status__display-name")
+                        .css({
+                            "display": "block",
+                            "max-width": "100%",
+                            "padding-right": "25px" });
 
-                            $userLink.append($icon);
-                            $userLink.append($("<span  class='display-name' style='display: block; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;' />").text("@" + toot.account.username));
-                            $user.append($userLink);
+                    var $icon = $("<div />")
+                        .addClass("status__avatar")
+                        .css({
+                            position: "absolute",
+                            left: "10px",
+                            top: "10px",
+                            width: "48px",
+                            height: "48px" })
+                        .append($("<div />")
+                                .addClass("avatar")
+                                .css({
+                                    width: "48px",
+                                    height: "48px",
+                                    "background-size": "48px 48px",
+                                    "background-image": "url(" + toot.account.avatar + ")"
+                                }));
 
-                            var $content = $("<div class='status__content'/>").html(toot.content);
+                    $userLink
+                        .append($icon)
+                        .append($("<span  />")
+                                .addClass("display-name")
+                                .css({
+                                    "display": "block",
+                                    "max-width": "100%",
+                                    "overflow": "hidden",
+                                    "white-space": "nowrap",
+                                    "text-overflow": "ellipsis"})
+                                .text("@" + toot.account.username));
 
-                            var $footer = $("<div />");
-                            var $createdAt = $("<a />")
-                            .attr("href", toot.url)
-                            .text(toot.created_at);
-                            $footer.append($createdAt);
+                    $user.append($userLink);
 
-                            var $toot = $("<div class='status'/>");
-                            $toot
-                            .append($user)
-                            .append($content)
-                            .append($footer);
-                            $result.append($toot);
-                            });
+                    var $content = $("<div />")
+                        .addClass("status__content")
+                        .html(toot.content);
+
+                    var $footer = $("<div />");
+                    var $createdAt = $("<a />")
+                        .attr("href", toot.url)
+                        .text(toot.created_at);
+                    $footer.append($createdAt);
+
+                    var $toot = $("<div />")
+                        .addClass("status")
+                        .append($user)
+                        .append($content)
+                        .append($footer);
+
+                    $result.append($toot);
+                });
             })
         .fail(function() {
             $result.html("取得できませんでした");
         });
     };
 
+    getTL();
     setInterval(getTL,4000);
 })();
