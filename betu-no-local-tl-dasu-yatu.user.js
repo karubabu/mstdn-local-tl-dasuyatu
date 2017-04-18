@@ -65,7 +65,7 @@
     var getTL = function(){
         $.getJSON(requestUrl)
             .done(function(data) {
-                $result.html("");
+                $result.empty();
                 data.forEach(function(toot) {
 
                     var $user_tmp = $user.clone(true);
