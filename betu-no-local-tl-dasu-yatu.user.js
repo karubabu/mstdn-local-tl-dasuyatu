@@ -11,7 +11,18 @@
 (function() {
     "use strict";
     var babu = $("div .column").eq(2).clone().appendTo(".columns-area");
-    babu.children("div[role='button']").text("pawoo.net local timeline");
+    var tmp_i = babu.find(".column-header").find("i").clone(true);
+    babu.find(".column-header").html("");babu.find(".column-header").append(tmp_i).append($("<form />").css("display","inline").append($("<input />").attr("type","text").attr("id","server").attr("placeholder", "サーバ名を入力(pawoo.netなど)")));
+    $("form").bind("submit", function(){
+        var reqUrl = $("form").find("input").val();
+        if(!reqUrl) return false;
+        if(reqUrl.indexOf("://") < 0)reqUrl = "https://" + reqUrl;
+        if(reqUrl[reqUrl.length - 1] != "/")reqUrl += "/";
+        reqUrl += "api/v1/timelines/public?local=true";
+
+        requestUrl = reqUrl;
+        console.log(reqUrl);
+        return false;});
 
     var $result = $(babu).children(".scrollable");
     var requestUrl = "https://pawoo.net/api/v1/timelines/public?local=true";
