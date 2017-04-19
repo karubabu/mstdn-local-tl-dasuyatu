@@ -21,6 +21,7 @@
         reqUrl += "api/v1/timelines/public?local=true";
 
         requestUrl = reqUrl;
+        getTL();
         console.log(reqUrl);
         return false;});
 
