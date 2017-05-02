@@ -10,6 +10,7 @@
 
 (function() {
     "use strict";
+    $(".columns-area > div:not([class])").eq(0).css("flex","");
     var babu = $("div .column").eq(2).clone().appendTo(".columns-area");
     var tmp_i = babu.find(".column-header").find("i").clone(true);
     babu.find(".column-header").html("");babu.find(".column-header").append(tmp_i).append($("<form />").css("display","inline").append($("<input />").attr("type","text").attr("id","server").attr("placeholder", "サーバ名を入力(pawoo.netなど)")));
